@@ -16,7 +16,7 @@ import java.util.function.*;
  */
 @FunctionalInterface
 interface Function3<T1, T2, T3> {
-    public void apply(T1 one, T2 two, T3 three) throws IOException, InterruptedException;
+    public void apply(T1 one, T2 two, T3 three) throws Exception;
 }
 
 /**
@@ -78,8 +78,8 @@ public class StockMarket implements Runnable {
         // These exceptions are designed to do exactly this:
         // interrupt us! Nothing bad to handle here. Just exit.
       }
-      catch (IOException ioEx) {
-
+      catch (Exception e) {
+        System.out.println(e.getStackTrace());
       }
     }
     // Convenient method to transform pennies into USD
