@@ -67,7 +67,7 @@ public class StockMarket implements Runnable {
           // Choose a fluctuation at random, +/- $5.00
           int adjustment = (priceFluctuator.nextInt(1000) - 500);
           price += adjustment;
-          System.out.println(symbol + " " + price(adjustment) + " = " + price(price));
+//          System.out.println(symbol + " " + price(adjustment) + " = " + price(price));
           stocks.put(symbol, price);
   
           // STUDENT: Publish the change to the NATS server

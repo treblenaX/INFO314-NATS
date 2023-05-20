@@ -21,7 +21,7 @@ public class StockPublisher {
   private static String natsUrl = null;
   private static DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
   public static void main(String... args) throws Exception {
-    if (args.length != 0 || args.length != 2) throw new Exception("Usage: StockPublisher <host> <port>");
+//    if (args.length != 0 || args.length != 2) throw new Exception("Usage: StockPublisher <host> <port>");
     natsUrl = (args.length == 2) ? "nats://" + args[0] + ":" + args[1] : "nats://localhost:4222";
     System.out.println("Starting stock publisher....");
 
@@ -31,6 +31,8 @@ public class StockPublisher {
     new Thread(sm2).start();
     StockMarket sm3 = new StockMarket(StockPublisher::publishMessage, "GE", "GMC", "FORD");
     new Thread(sm3).start();
+
+    StockBroker elb = new StockBroker("elb", natsUrl);
   }
 
   public synchronized static void publishDebugOutput(String symbol, int adjustment, int price) {

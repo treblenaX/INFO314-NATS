@@ -1,4 +1,8 @@
 # INFO314-NATS
+# StockPublisher
+## How to Run:
+
+    javac -classpath ../jnats-2.16.11.jar:. StockMonitor.java; java -classpath ../jnats-2.16.11.jar:. StockMonitor.java localhost 4222
 
 Welcome! This is a group project homework for INFO 314. Begin by forking this repository into the GitHub account your group is using for this assignment. (It is strongly encouraged that you each individually also create forks of the repository into your own accounts at the end of this assignment--interviewers will want to see this!)
 
