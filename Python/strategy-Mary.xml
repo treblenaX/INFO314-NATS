@@ -1,0 +1,14 @@
+<strategy>
+  <when><stock>MSFT</stock><above>200</above><buy>0</buy></when>
+  <when><stock>AMZN</stock><above>300</above><buy>0</buy></when>
+  <when><stock>GOOG</stock><above>400</above><buy>0</buy></when>
+  <when><stock>GE</stock><above>200</above><buy>0</buy></when>
+  <when><stock>MSFT</stock><below>100</below><buy>20</buy></when>
+  <when><stock>AMZN</stock><below>100</below><buy>20</buy></when>
+  <when><stock>GOOG</stock><below>100</below><buy>20</buy></when>
+  <when><stock>GE</stock><below>100</below><buy>20</buy></when>
+</strategy>
+
+<!-- MSFT : [500, 0, 100, 20]
+     AMZN : [300, 0, 100, 20]
+     MSFT : [400, 0, 100, 20] -->
