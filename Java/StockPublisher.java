@@ -31,8 +31,6 @@ public class StockPublisher {
     new Thread(sm2).start();
     StockMarket sm3 = new StockMarket(StockPublisher::publishMessage, "GE", "GMC", "FORD");
     new Thread(sm3).start();
-
-    StockBroker elb = new StockBroker("elb", natsUrl);
   }
 
   public synchronized static void publishDebugOutput(String symbol, int adjustment, int price) {

@@ -50,16 +50,12 @@ public class StockBroker {
         } catch (Exception e) {
           e.printStackTrace();
         }
+        System.out.println(msg.getReplyTo());
         // process message
         nc.publish(msg.getReplyTo(), response.getBytes());
       });
       clientDispatcher.subscribe("broker." + name);
     }).start();
-
-    // TODO: take out - this is for testing, it will break if the symbol isn't in the map.
-    Thread.sleep(5000);
-    Message m  = nc.request("broker." + name, "<order><buy symbol=\"AMZN\" amount=\"100\" /></order>".getBytes(), Duration.ofSeconds(10));
-    System.out.println(new String(m.getData(), StandardCharsets.UTF_8));
   }
 
   static class Order {
@@ -132,5 +128,10 @@ public class StockBroker {
     transformer.transform(source, result);
 
     return writer.toString();
+  }
+
+  public static void main(String[] args) throws Exception {
+    String natsUrl = (args.length == 2) ? "nats://" + args[0] + ":" + args[1] : "nats://localhost:4222";
+    StockBroker elb = new StockBroker("elb", natsUrl);
   }
 }
