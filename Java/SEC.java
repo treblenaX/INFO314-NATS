@@ -25,6 +25,7 @@ public class SEC {
       } catch (Exception e) {
         e.printStackTrace();
       }
+      System.out.println("Response received from: " + msg.getSubject());
     });
     d.subscribe(">");
   }
@@ -43,16 +44,18 @@ public class SEC {
     int shareAmount = Integer.parseInt(typeEl.getAttribute("amount"));
 
     Element completeEl = (Element) receiptElementList.item(0).getLastChild();
-    int pennyAmount = Integer.parseInt(completeEl.getAttribute("amount"));
+    int pennyAmount = (!completeEl.getAttribute("amount").contains("."))
+            ? Integer.parseInt(completeEl.getAttribute("amount"))
+            : (int) Math.round(Double.parseDouble(completeEl.getAttribute("amount")));
 
     if (pennyAmount < 500000) return;
+    System.out.println("Logging suspicious message... " + subject + " " + type + " " + symbol + " " + shareAmount + " " + pennyAmount);
 
     File file = new File("logs/suspicions.log");
 
     FileWriter fw = new FileWriter(file, true);
     String data = subject + " " + type + " " + symbol + " " + shareAmount + " " + pennyAmount;
     fw.write(data + '\n');
-    System.out.println(data);
 
     fw.close();
   }

@@ -50,7 +50,6 @@ public class StockBroker {
         } catch (Exception e) {
           e.printStackTrace();
         }
-        System.out.println(msg.getReplyTo());
         // process message
         nc.publish(msg.getReplyTo(), response.getBytes());
       });
