@@ -1,0 +1,10 @@
+<strategy>
+  <when><stock>APPLE</stock><above>200</above><buy>0</buy></when>
+  <when><stock>OKTA</stock><above>300</above><buy>0</buy></when>
+  <when><stock>ADOBE</stock><above>400</above><buy>0</buy></when>
+  <when><stock>GE</stock><above>200</above><buy>0</buy></when>
+  <when><stock>APPLE</stock><below>100</below><buy>20</buy></when>
+  <when><stock>OKTA</stock><below>100</below><buy>20</buy></when>
+  <when><stock>ADOBE</stock><below>100</below><buy>20</buy></when>
+  <when><stock>GE</stock><below>100</below><buy>20</buy></when>
+</strategy>

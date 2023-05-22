@@ -1,0 +1,6 @@
+<portfolio>
+    <stock symbol="APPLE">50</stock>
+    <stock symbol="OKTA">60</stock>
+    <stock symbol="ADOBE">30</stock>
+    <stock symbol="GE">20</stock>
+</portfolio>
