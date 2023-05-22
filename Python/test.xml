@@ -1,0 +1,16 @@
+<!-- Mary -->
+<portfolio>
+    <stock symbol="GOOG">50</stock>
+    <stock symbol="AMZN">60</stock>
+    <stock symbol="MSFT">30</stock>
+    <stock symbol="GE">20</stock>
+</portfolio>
+
+
+<!-- Ketty -->
+<portfolio>
+    <stock symbol="APPLE">50</stock>
+    <stock symbol="OKTA">60</stock>
+    <stock symbol="ADOBE">30</stock>
+    <stock symbol="GE">20</stock>
+</portfolio>
