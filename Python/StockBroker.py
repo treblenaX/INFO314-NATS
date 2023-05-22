@@ -8,7 +8,7 @@ class Broker:
         self.name = name
         self.clients = {}
         self.natsurl = "nats://localhost:4222"
-        self.curPrce = None
+        self.curPrice = None
 
     def callback(self, msg):
         # print("Received a message with subject: " + msg.subject)
