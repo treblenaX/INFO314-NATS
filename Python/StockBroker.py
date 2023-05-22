@@ -1,13 +1,16 @@
 from pynats import NATSClient
 import xml.etree.ElementTree as ET
 import xml.dom.minidom
+import StockBrokerClient
+import threading
+import time
 # StockBrokers are uniquely named (give each StockBroker a name constructor parameter that is used to identify this StockBroker everywhere in the system), and clients choose which StockBroker they use. When the client wishes
 # they will send "buy" messages that look like the following:
 class Broker:
-    def __init__(self, name) -> None:
+    def __init__(self, name, natsurl) -> None:
         self.name = name
         self.clients = {}
-        self.natsurl = "nats://localhost:4222"
+        self.natsurl = natsurl
         self.curPrice = None
 
     def callback(self, msg):
@@ -83,3 +86,25 @@ class Broker:
                 name, callback=callback, queue="test-queue", max_messages=2
             )
             server.wait(count=1)
+
+
+if __name__ == "__main__":
+    natsurl = "nats://localhost:4222"
+    broker_alex = Broker("Alex", natsurl)
+    broker_ted = Broker("ted", natsurl)
+
+    client_mary = StockBrokerClient.Client("Mary", broker_alex, natsurl)
+    client_ketty = StockBrokerClient.Client("Ketty", broker_alex, natsurl)
+    t1 = threading.Thread(client_mary)
+    t2 = threading.Thread(client_ketty)
+
+    t1.start()
+    t2.start()
+
+    # client_mary = StockBrokerClient.Client("Mary", broker_alex, natsurl)
+    # client_ketty = StockBrokerClient.Client("Ketty", broker_alex, natsurl)
+    # t1 = threading.Thread(client_mary)
+    # t2 = threading.Thread(client_ketty)
+
+    # t1.start()
+    # t2.start()
