@@ -12,13 +12,15 @@ import os
 # nats: request(), msgpack()
 
 
-class StockerBrokerClient:
-    def __init__(self, name, broker) -> None:
+class Client(threading.Thread):
+    def __init__(self, name, broker, natsurl) -> None:
+        threading.Thread.__init__(self)
+
         self.name = name
         self.broker = broker    # an instance of a StockBroker
         self.portfolio = 'portfolio-' + name + '.xml'
         self.strategy = 'strategy-' + name + '.xml'
-        self.natsurl = "nats://localhost:4222"
+        self.natsurl = natsurl
         self.threshold = defaultdict(list)
 
         self.symbols_num = self.getSymbols()  #{'MSFT': '500', 'AMZN': '500', 'GOOG': '500'}
@@ -27,9 +29,10 @@ class StockerBrokerClient:
 
         self.getThreshold()   # {'MSFT': ['500', '50', '100', '20']}
 
+    def run(self):
         with NATSClient(url=self.natsurl) as nc:
             nc.connect()
-            print("Check the StockPublisher:")
+            print(self.name + " Check the StockPublisher:")
 
             for symbol in self.symbols_num.keys():
                 nc.subscribe(subject=symbol, callback=self.callback)
@@ -66,8 +69,8 @@ class StockerBrokerClient:
 
 
     def getThreshold(self):
-        # filename = self.strategy
-        tree = ET.parse("strategy-Mary.xml")
+        filename = self.strategy
+        tree = ET.parse(filename)
         root = tree.getroot()
 
         for children in root:
@@ -148,8 +151,10 @@ class StockerBrokerClient:
         reply firslt!!
         """
         broker = self.broker
+        brokerName = broker.name
 
         def worker(name):
+            print("Work with broker: " + brokerName)
             broker.worker(name)
 
         # run thread to call the StockBroker
@@ -168,6 +173,9 @@ class StockerBrokerClient:
 
 
 if __name__ == "__main__":
-    broker_alex =StockBroker.Broker("Alex")
-    client_mary = StockerBrokerClient("Mary", broker_alex)
-    # client_mary.workWithBroker();
+    natsurl = "nats://localhost:4222"
+    broker_alex =StockBroker.Broker("Alex", natsurl)
+    thread1 = Client("Mary", broker_alex, natsurl)
+    thread2 = Client("Ketty", broker_alex, natsurl)
+    thread1.start()
+    thread2.start()
